@@ -26,9 +26,8 @@ public class DishController {
 
     @GetMapping("/page")
     public Result<PageResult> page(DishPageQueryDTO dishPageQueryDTO){
-
-        return null;
-
-
+        log.info("菜品分页查询：{}",dishPageQueryDTO);
+        PageResult  pageResult = dishService.pageQuery(dishPageQueryDTO);
+        return Result.success(pageResult);
     }
 }
