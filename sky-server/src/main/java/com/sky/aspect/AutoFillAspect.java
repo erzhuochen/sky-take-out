@@ -33,6 +33,7 @@ public class AutoFillAspect {
         AutoFill autoFill = signature.getMethod().getAnnotation(AutoFill.class);//获得方法上的注解对象
         OperationType operationType = autoFill.value();//获得数据库操作类型
 
+        //拦截方法的参数，第一个参数按规范是将要传入的实体类
         Object[] args = joinPoint.getArgs();
         if(args == null || args.length == 0){
             return;
@@ -44,6 +45,7 @@ public class AutoFillAspect {
 
         if(operationType == OperationType.INSERT){
             try {
+                //找到实体类中一个叫setCreatetime，返回值为LocalDateTime的方法
                 Method setCreateTime = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_CREATE_TIME, LocalDateTime.class);
                 Method setCreateUser = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_CREATE_USER, Long.class);
                 Method setUpdateTime = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_TIME, LocalDateTime.class);
